@@ -1,6 +1,19 @@
 name: creativeagent
 metadata:
   template: creativeagent@0.0.1-beta
+services:
+  api:
+    project: ./src/api
+    language: python
+    host: containerapp
+    docker:
+      remoteBuild: true
+  web:
+    project: ./src/web
+    language: js
+    host: containerapp
+    docker:
+      remoteBuild: true
 hooks:
   postprovision:
     posix:
@@ -13,13 +26,6 @@ hooks:
       continueOnError: false
       interactive: true
       run: infra/hooks/postprovision.ps1
-  postdeploy:
-  #    windows:
-  #      shell: pwsh
-  #      run: azd env set VITE_API_BASE_URL $env:"https://${CODESPACE_NAME}-8000.app.github.dev"
-  #    posix:
-  #      shell: sh
-  #      run: azd env set VITE_API_BASE_URL ${"https://${CODESPACE_NAME}-8000.app.github.dev"}
 infra:
     provider: "bicep"
 
